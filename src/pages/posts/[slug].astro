@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getPostBySlug } from '../../lib/wordpress';
+
+const { slug } = Astro.params;
+const post = slug ? await getPostBySlug(slug) : null;
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+---
+<Layout title={post.title.rendered}>
+  <p><a href="/">← Posts</a></p>
+  <article>
+    <h1 set:html={post.title.rendered} />
+    <div set:html={post.content.rendered} />
+  </article>
+</Layout>

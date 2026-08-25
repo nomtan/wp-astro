@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getPageBySlug } from '../../lib/wordpress';
+
+const { slug } = Astro.params;
+const page = slug ? await getPageBySlug(slug) : null;
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+---
+<Layout title={page.title.rendered}>
+  <article>
+    <h1 set:html={page.title.rendered} />
+    <div set:html={page.content.rendered} />
+  </article>
+</Layout>

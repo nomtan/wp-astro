@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getPosts } from '../lib/wordpress';
+
+const posts = await getPosts();
+---
+<Layout title="Posts">
+  <h1>Posts</h1>
+  <ul>
+    {posts.map((post) => (
+      <li>
+        <a href={`/posts/${post.slug}`}>{post.title.rendered}</a>
+      </li>
+    ))}
+  </ul>
+</Layout>
